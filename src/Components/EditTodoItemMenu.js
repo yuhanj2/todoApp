@@ -43,23 +43,27 @@ export default function EditTodoItemMenu(props){
     // 整合上面的css style，属于material ui api
     const classes = useStyles();
     // 使用useSelector() hook 来让当前component读取redux中的state
-    const currContent = useSelector((state) => state.currContent);
-    const error = useSelector((state) => state.error);
-    const dueTime = useSelector((state) => state.currDueTime);
-    const currPriority = useSelector((state) => state.currPriority);
+    const currContent = useSelector((state) => state.currContent); // 从redux中读取现在的事项内容
+    const error = useSelector((state) => state.error); // 从redux中读取报错信息
+    const dueTime = useSelector((state) => state.currDueTime); // 从redux读取当前截止时间
+    const currPriority = useSelector((state) => state.currPriority); // 从redux中读取当前优先级
+    // 使用useDispatch() hook 来让当前component可以去通过dispatch action来更改redux中的states
     const dispatch = useDispatch();
 
+    // 当用户在编辑内容文本框时触发
     const handleContentChange = (event) => {
         const newContent = event.target.value;
         dispatch(todoActions.setError(""));
         dispatch(todoActions.setNewContent(newContent));
     }
 
+    // 当用户在编辑截止时间条时触发
     const handleDateTimeChange = (event) => {
         //console.log(event);
         dispatch(todoActions.setNewDueTime(event));
     }
 
+    // 将程序中的优先级翻译成中文显示在页面上
     const translatePriority = () => {
         if(currPriority === priorities.GENERAL){
             return "普通";
@@ -72,26 +76,31 @@ export default function EditTodoItemMenu(props){
         }
     }
 
+    // 当用户确认编辑该条目时触发
     const handleClick = (e) => {
         if(currContent.length === 0){
-            dispatch(todoActions.setError("代办事项内容不能为空"));
+            dispatch(todoActions.setError("代办事项内容不能为空")); // 当用户忘记输入待办内容时报错
             return;
         }
-        dispatch(todoActions.editItem());
+        dispatch(todoActions.editItem()); // 将编辑好的内容保存到redux
     }
 
+    // 当用户取消编辑条目时触发
     const hideMenu = () => {
         dispatch(todoActions.toggleEdit());
     }
 
+    // 当用户设置当前优先级为紧急时触发
     const setUrgent = () => {
         dispatch(todoActions.setNewPriority(priorities.URGENT));
     }
 
+    // 当用户设置当前优先级为重要时触发
     const setImportant = () => {
         dispatch(todoActions.setNewPriority(priorities.IMPORTANT));
     }
 
+    // 当用户设置当前优先级为一般时触发
     const setGeneral = () => {
         dispatch(todoActions.setNewPriority(priorities.GENERAL));
     }
@@ -158,7 +167,7 @@ export default function EditTodoItemMenu(props){
                         onClick={hideMenu}
                         className={classes.submit}
                     >
-                        取消添加
+                        取消修改
                     </Button>
                 </div>
             </form>

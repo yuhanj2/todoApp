@@ -1,7 +1,6 @@
 import { createStore, applyMiddleware, compose } from "redux";
 import todoReducers from "./Reducers/todoReducers";
 import thunk from "redux-thunk";
-import priorities from "./Constants/priorities";
 
 // detect whether the browser has redux extension installed
 const composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;

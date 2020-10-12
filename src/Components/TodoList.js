@@ -10,12 +10,10 @@ import EditIcon from '@material-ui/icons/Edit';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import ListItemText from '@material-ui/core/ListItemText';
 import IconButton from '@material-ui/core/IconButton';
-//import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import FiberManualRecordIcon from '@material-ui/icons/FiberManualRecord';
-import { useDispatch, useSelector, connect } from "react-redux";
+import { connect } from "react-redux";
 import ListSubheader from '@material-ui/core/ListSubheader';
 import priorities from "../Constants/priorities";
-import green from "@material-ui/core/colors/green";
 import red from "@material-ui/core/colors/red";
 import orange from "@material-ui/core/colors/orange";
 import blue from "@material-ui/core/colors/blue";
@@ -33,6 +31,7 @@ const useStyles = makeStyles((theme) =>({
     }
 }));
 
+// react functional component TodoList
 function TodoList({todoItems, edit, currItem, sortedPriority, sortedDueTime, handleEdit, handleDelete}) {
     const classes = useStyles();
     return (
@@ -45,7 +44,8 @@ function TodoList({todoItems, edit, currItem, sortedPriority, sortedDueTime, han
                     </ListSubheader>
                 }>
 
-                {!todoItems.length
+                {  // 根据redux中储存的待办事项列表的长度决定显示什么，如果没有条目，显示无待办事项，反之使用map函数显示出所有条目
+                    !todoItems.length
                     ?
                     <Typography className={classes.note} align="center" variant="h6" color="primary">无任何待办事项</Typography>
                     :
@@ -101,6 +101,7 @@ function TodoList({todoItems, edit, currItem, sortedPriority, sortedDueTime, han
     )
 }
 
+// 连接redux state和component
 const mapStateToProps = (state) => {
     return {
         todoItems: state.todoItems,
@@ -111,6 +112,7 @@ const mapStateToProps = (state) => {
     }
 }
 
+// 在component中更改redux state
 const mapDispatchToProps = dispatch => {
     return {
         handleEdit: (item) => {

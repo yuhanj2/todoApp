@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -7,10 +7,6 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import SvgIcon from '@material-ui/core/SvgIcon';
 import TodoList from './Components/TodoList';
-import priorities from "./Constants/priorities";
-import red from "@material-ui/core/colors/red";
-import orange from "@material-ui/core/colors/orange";
-import blue from "@material-ui/core/colors/blue";
 import AddTodoItemMenu from "./Components/AddTodoItemMenu";
 import {useDispatch, useSelector} from "react-redux";
 import * as todoActions from "./Actions/todoActions"
@@ -45,6 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
+// react functional component, need to use react hooks to enable state and effect use
 export default function App(props) {
     // 整合css
     const classes = useStyles();
@@ -70,6 +67,7 @@ export default function App(props) {
         dispatch(todoActions.sortByPriority());
     }
 
+    // 整个app的前端代码
     return (
         <Container component="main" maxWidth="xs">
 
@@ -86,7 +84,10 @@ export default function App(props) {
 
                 <TodoList/>
 
-                {createNew? <AddTodoItemMenu/> : <div/>}
+                {
+                    // 通过createNew布尔值控制菜单的显示/隐藏
+                    createNew? <AddTodoItemMenu/> : <div/>
+                }
 
                 <Button
                     fullWidth
