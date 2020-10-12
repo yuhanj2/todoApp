@@ -52,10 +52,10 @@ export default function EditTodoItemMenu(props){
     // 整合上面的css style，属于material ui api
     const classes = useStyles();
     // 使用useState() react hook来为当前component添加states和更改states的函数们
-    const [newContent, setNewContent] = useState("");
-    const [newDueTime, setNewDueTime] = useState(new Date().addHours(3));
-    const [error, setError] = useState('');
-    const [newPriority, setNewPriority] = useState(priorities.GENERAL);
+    const [newContent, setNewContent] = useState(""); // 每当用户更改内容框中的文字，newContent会跟着更新，初始值为空字符串
+    const [newDueTime, setNewDueTime] = useState(new Date().addHours(3)); // 设置待办事项截止时间用，初始值为现在的时间往后三小时
+    const [error, setError] = useState(''); // 当编辑出现错误时使用，初始值空字符串
+    const [newPriority, setNewPriority] = useState(priorities.GENERAL); // 设置新待办事项的优先级，初始值为普通优先级
     // 使用useDispatch() hook 来让当前component可以去通过dispatch action来更改redux中的states
     const dispatch = useDispatch();
 

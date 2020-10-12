@@ -46,19 +46,26 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function App(props) {
+    // 整合css
     const classes = useStyles();
-    const todoItems = useSelector((state) => state.todoItems);
-    const createNew = useSelector((state) => state.createNew);
+    // 使用useSelector来让此component读取redux中的shared state
+    const todoItems = useSelector((state) => state.todoItems); // 存储在redux中的待办事件列表，数据结构为array
+    const createNew = useSelector((state) => state.createNew); // 存储在redux中的布尔值，用来控制是否渲染 "添加新待办" 表格
+    // 使用useDispatch去触发redux action，来最终改变shared state
     const dispatch = useDispatch();
 
+    // 显现/隐藏 添加新待办 菜单
     const hideOrShowMenu = () => {
+        // 将redux中createNew的布尔值反向
         dispatch(todoActions.toggleCreateNew());
     }
 
+    // 触发redux action去重新按照截止时间重新排序待办事件列表
     const sortByDueTime = () => {
         dispatch(todoActions.sortByDueTime());
     }
 
+    // 触发redux action去按照优先级重新排序待办事件列表
     const sortByPriority = () => {
         dispatch(todoActions.sortByPriority());
     }
@@ -91,7 +98,8 @@ export default function App(props) {
                     创建新待办事项
                 </Button>
 
-                { (todoItems.length > 1)?
+                { // 当我们的待办事件表中有超过一个项目的时候，就有排序的必要了，显示出两种排序按钮
+                (todoItems.length > 1)?
                     (
                     <div>
                         <Button
